@@ -15,6 +15,7 @@ import com.security.Enum.Perfil;
 import com.security.model.Cliente;
 import com.security.repository.ClienteRepository;
 import com.security.service.HomeService;
+import com.security.util.PasswordUtil;
 import com.security.util.UploadUtil;
 
 @Controller
@@ -38,6 +39,8 @@ public class ClienteController {
   @PostMapping("cadastro-cliente")
   public ModelAndView cadastro(@ModelAttribute Cliente cliente, @RequestParam("file") MultipartFile imagem) {
     ModelAndView mv = new ModelAndView("cliente/cadastro");
+    String hashSenha = PasswordUtil.encoder(cliente.getSenha());
+    cliente.setSenha(hashSenha);
     mv.addObject("usuario", cliente);
     try {
       if (UploadUtil.fazerUploading(imagem)) {
