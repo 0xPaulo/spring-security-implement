@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: headImports}"></head>
+<style>
+  .lblCliente {
+    font-weight: bold;
+  }
+</style>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav th:replace="~{fragments/navbar :: navbarImports}"></nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+      <nav th:replace="~{fragments/sidebar :: sidebarImports}"></nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+          <!-- cabeçalho boas vindas -->
+          <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                  <h3 class="font-weight-bold">Criar chamado</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- conteúdo principal -->
+          <form th:action="@{newTask}" method="post" th:object="${chamado}">
+            <div class="row">
+              <!-- field nome -->
+              <div class="form-group col-3">
+                <label for="nome" class="lblCliente">Titulo do chamado:</label>
+                <input th:field="*{titulo}" type="text" class="form-control" autocomplete="off" id="nome"
+                  placeholder="Ex: impressora com defeito">
+              </div>
+              <div class="form-group col-3">
+                <label for="nome" class="lblCliente">Status do chamado:</label>
+                <select name="" id="" class="form-control" th:field="*{status}">
+                  <option th:each="descricaoChamados : ${statusChamado}" th:text="${descricaoChamados}"
+                    th:value="${descricaoChamados}"></option>
+                </select>
+              </div>
+              <div class="form-group col-3">
+                <label for="nome" class="lblCliente">Prioridade do chamado:</label>
+                <select th:field="*{prioridade}" name="" id="" class="form-control">
+                  <option th:each="descricaoPrioridade : ${Prioridade}" th:text="${descricaoPrioridade}"
+                    th:value="${descricaoPrioridade}"></option>
+                </select>
+              </div>
+              <div class="form-group col-3">
+                <label for="nome" class="lblCliente">Observação:</label>
+                <input type="text" th:field="*{observacao}" class="form-control" autocomplete="off"
+                  placeholder="Ex: defeito reincidente">
+              </div>
+              <div class="form-group col-3">
+                <label class="lblCliente" for="">Definir tecnico</label>
+                <select name="" class="form-control" id="" th:field="*{tecnico}">
+                  <option th:each="tec : ${tecnicos}" th:text="${tec.nome}" th:value="${tec.id}"></option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success btn-rounded mt-4">SALVAR INFORMAÇÕES</button>
+          </form>
+
+
+          <!-- plugins:js -->
+          <script src="../../vendors/js/vendor.bundle.base.js"></script>
+          <!-- End plugin js for this page -->
+          <!-- inject:js -->
+          <script src="../../js/off-canvas.js"></script>
+          <script src="../../js/template.js"></script>
+          <script src="../../js/hoverable-collapse.js"></script>
+          <!-- endinject -->
+          <!-- Custom js for this page-->
+          <script src="../../js/dashboard.js"></script>
+          <!-- End custom js for this page-->
+</body>
+
+</html>
