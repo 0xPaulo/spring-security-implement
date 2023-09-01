@@ -15,7 +15,7 @@ public class ChamadoService {
   ChamadoRepository chamadoRepository;
 
   public List<Chamado> findAllChamados() {
-    return chamadoRepository.findAll();
+    return chamadoRepository.buscarTodosChamados();
   }
 
 }
