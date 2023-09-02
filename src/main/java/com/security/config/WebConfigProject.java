@@ -17,38 +17,38 @@ import com.security.service.TecnicoUserDetailsService;
 @EnableWebSecurity
 public class WebConfigProject extends WebSecurityConfigurerAdapter {
 
-  @Autowired
-  private ClienteUserDetailsService clienteUserDetailsService;
-  @Autowired
-  private TecnicoUserDetailsService tecnicoUserDetailsService;
+    @Autowired
+    private ClienteUserDetailsService clienteUserDetailsService;
+    @Autowired
+    private TecnicoUserDetailsService tecnicoUserDetailsService;
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests()
-        // .antMatchers("/**").permitAll()
-        .antMatchers("/images/**").permitAll()
-        .antMatchers("/js/**").permitAll()
-        .antMatchers("/fonts/**").permitAll()
-        .antMatchers("vendors/**").permitAll()
-        .antMatchers("/css/**").permitAll()
-        .anyRequest().authenticated();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                // .antMatchers("/**").permitAll()
+                .antMatchers("/images/**").permitAll()
+                .antMatchers("/js/**").permitAll()
+                .antMatchers("/fonts/**").permitAll()
+                .antMatchers("vendors/**").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .anyRequest().authenticated();
 
-    http.formLogin()
-        .loginPage("/login")
-        .defaultSuccessUrl("/")
-        .permitAll();
+        http.formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/", true)
+                .permitAll();
 
-    http.logout()
-        .logoutRequestMatcher(
-            new AntPathRequestMatcher("/logout", "GET"))
-        .logoutSuccessUrl("/login");
-  }
+        http.logout()
+                .logoutRequestMatcher(
+                        new AntPathRequestMatcher("/logout", "GET"))
+                .logoutSuccessUrl("/login");
+    }
 
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(tecnicoUserDetailsService)
-        .passwordEncoder(new BCryptPasswordEncoder());
-    auth.userDetailsService(clienteUserDetailsService)
-        .passwordEncoder(new BCryptPasswordEncoder());
-  }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(tecnicoUserDetailsService)
+                .passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(clienteUserDetailsService)
+                .passwordEncoder(new BCryptPasswordEncoder());
+    }
 }
