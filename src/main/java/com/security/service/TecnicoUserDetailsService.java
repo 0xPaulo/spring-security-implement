@@ -18,9 +18,12 @@ public class TecnicoUserDetailsService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    Tecnico tecnico = tecnicoRepository.findByEmail(email)
-        .orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado na base de dados!"));
-    return new TecnicoUserDetails(tecnico);
+    Tecnico tecnico = tecnicoRepository.findByEmailNoBanco(email);
+    if (tecnico == null) {
+      throw new UsernameNotFoundException("Usuario nao encontrado" + tecnico);
+    }
+    UserDetails userDetails = new TecnicoUserDetails(tecnico);
+    return userDetails;
   }
 
 }

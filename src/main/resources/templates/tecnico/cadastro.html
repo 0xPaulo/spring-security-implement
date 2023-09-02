@@ -62,8 +62,9 @@
 
               <div class="form-group col-6">
                 <label for="senha" class="lblCliente">Perfil:</label>
-                <select name="" id="" class="form-control">
-                  <option th:each="perfil : ${perfils}" th:text="${perfil}" th:value="${perfil}"></option>
+                <select name="" id="" class="form-control" th:field="*{perfil}">
+                  <option th:each="perfil : ${perfils}" th:text="${perfil}" th:value="${perfil}">
+                  </option>
                 </select>
               </div>
             </div>

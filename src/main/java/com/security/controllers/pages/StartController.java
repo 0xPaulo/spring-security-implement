@@ -13,7 +13,7 @@ public class StartController {
     @Autowired
     ChamadoService chamadoService;
 
-    @GetMapping("home")
+    @GetMapping()
     public ModelAndView start() {
         ModelAndView mv = new ModelAndView("home/index");
         var variavel = chamadoService

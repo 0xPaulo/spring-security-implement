@@ -78,6 +78,8 @@ public class TecnicoController {
 
   @PostMapping("editar-tecnico")
   public ModelAndView editarT(Tecnico tecnico) {
+    String hashSenha = PasswordUtil.encoder(tecnico.getSenha());
+    tecnico.setSenha(hashSenha);
     tecnicoRepository.save(tecnico);
     return tecnicosList();
   }
