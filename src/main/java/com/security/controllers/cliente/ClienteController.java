@@ -1,6 +1,7 @@
 package com.security.controllers.cliente;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -79,7 +80,34 @@ public class ClienteController {
 
   @PostMapping("editar-cliente")
   public ModelAndView editarC(Cliente cliente) {
+    String hashSenha = PasswordUtil.encoder(cliente.getSenha());
+    cliente.setSenha(hashSenha);
     clienteRepository.save(cliente);
     return clientesList();
+  }
+
+  @GetMapping("editar-perfil")
+  public ModelAndView editarPerfil(@RequestParam("id") Integer id) {
+    ModelAndView mv = new ModelAndView("cliente/editar-perfil-cliente");
+    // mv.setViewName("cliente/editar-perfil-cliente");
+    mv.addObject("usuario", clienteRepository.findById(id));
+    return mv;
+  }
+
+  @PostMapping("editar-perfil")
+  public ModelAndView editarPerfil(@ModelAttribute Cliente cliente, @RequestParam("file") MultipartFile imagem) {
+    ModelAndView mv = new ModelAndView("cliente/editar-perfil-cliente");
+    try {
+      if (UploadUtil.fazerUploading(imagem)) {
+        cliente.setImagem(imagem.getOriginalFilename());
+      }
+      clienteRepository.save(cliente);
+      System.out.println("Salvo com sucesso " + cliente.getNome() + " " + cliente.getImagem());
+      return homeService.getHome();
+    } catch (Exception e) {
+      mv.addObject("msgErro", e.getMessage());
+      System.out.println("Erro ao salvar" + e.getMessage());
+      return mv;
+    }
   }
 }

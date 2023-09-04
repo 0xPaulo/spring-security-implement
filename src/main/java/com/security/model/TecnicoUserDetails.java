@@ -18,6 +18,14 @@ public class TecnicoUserDetails implements UserDetails {
     return null;
   }
 
+  public String getNome() {
+    return tecnico.getNome();
+  }
+
+  public Integer getId() {
+    return tecnico.getId();
+  }
+
   @Override
   public String getPassword() {
     return tecnico.getSenha();

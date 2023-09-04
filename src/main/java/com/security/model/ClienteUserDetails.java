@@ -18,6 +18,18 @@ public class ClienteUserDetails implements UserDetails {
     return null;
   }
 
+  public String getNome() {
+    return cliente.getNome();
+  }
+
+  public Integer getId() {
+    return cliente.getId();
+  }
+
+  public String imagemPerfil() {
+    return cliente.getImagem();
+  }
+
   @Override
   public String getPassword() {
     return cliente.getSenha();

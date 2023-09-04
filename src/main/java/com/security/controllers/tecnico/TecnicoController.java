@@ -83,4 +83,13 @@ public class TecnicoController {
     tecnicoRepository.save(tecnico);
     return tecnicosList();
   }
+
+  @GetMapping("editar-perfil")
+  public ModelAndView editarPerfil(@RequestParam("id") Integer id) {
+    ModelAndView mv = new ModelAndView();
+    mv.setViewName("tecnico/editar-perfil-tecnico");
+    mv.addObject("tecnico", tecnicoRepository.findById(id));
+    return mv;
+
+  }
 }
